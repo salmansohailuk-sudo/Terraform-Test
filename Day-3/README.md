@@ -65,6 +65,7 @@ Run the following and paste in the keys from Step 3:
 
 ```bash
 aws configure --profile test
+
 ```
 
 ```
@@ -94,8 +95,10 @@ Before you begin, make sure you have:
 
 ```bash
 
-### 1. Show configured AWS profiles
+### 1. Show configured AWS profiles from GIT Bash
 ####  aws configure list-profiles
+####  aws configure list --profile dev
+####  aws configure list --profile test
 
 ### 2. Display credentials file (contains access keys)
 #### cat ~/.aws/credentials
