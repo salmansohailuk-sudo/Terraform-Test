@@ -1,4 +1,6 @@
 # 🏗️ Terraform Multi-Environment AWS Infrastructure
+# Built from scratch in Group Lab
+# Author Salman Sayeed, MSc,  DEVOPS Engineer - +447356261995 (Whats app) - eMail: salmansohailuk@gmail.com
 
 > Manage **dev** and **test** AWS environments from a single codebase — clean, simple, no hardcoded values.
 
