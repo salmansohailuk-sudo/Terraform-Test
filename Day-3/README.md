@@ -95,7 +95,7 @@ Before you begin, make sure you have:
 ```bash
 
 ### 1. Show configured AWS profiles
-####  configure list-profiles
+####  aws configure list-profiles
 
 ### 2. Display credentials file (contains access keys)
 #### cat ~/.aws/credentials
