@@ -94,8 +94,6 @@ Before you begin, make sure you have:
 
 ```bash
 # Check your profiles exist
-cat ~/.aws/credentials
-```
 
 | Profile | Environment | Region    |
 |---------|-------------|-----------|
@@ -109,7 +107,7 @@ cat ~/.aws/credentials
 ### 1 — Clone & enter the project
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/salmansohailuk-sudo/Terraform-Test.git
 cd <project-folder>
 ```
 
