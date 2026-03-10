@@ -1,6 +1,6 @@
 # 🏗️ Terraform Multi-Environment AWS Infrastructure
 
-> 👨‍💻 **Salman Sayeed, MSc — DevOps Engineer** · Built from scratch in Group Lab
+> 👨‍💻 **Salman Sayeed, MSc — DevOps Engineer** · Built from scratch
 > 📱 WhatsApp: +447356261995 · 📧 salmansohailuk@gmail.com
 
 ---
