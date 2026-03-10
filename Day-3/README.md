@@ -1,6 +1,9 @@
 # 🏗️ Terraform Multi-Environment AWS Infrastructure
-# Built from scratch in Group Lab
-# Author Salman Sayeed, MSc,  DEVOPS Engineer - +447356261995 (Whats app) - eMail: salmansohailuk@gmail.com
+
+> 👨‍💻 **Salman Sayeed, MSc — DevOps Engineer** · Built from scratch in Group Lab
+> 📱 WhatsApp: +447356261995 · 📧 salmansohailuk@gmail.com
+
+---
 
 > Manage **dev** and **test** AWS environments from a single codebase — clean, simple, no hardcoded values.
 
@@ -54,7 +57,7 @@ Access Key ID:     AKIA47CRWHENPGPRPORG        ← example, replace with yours
 Secret Access Key: 8AB5TzQdz8ya4XHNRw3Dd+...  ← example, replace with yours
 ```
 
-> 🔐 Optional:   **Never commit these keys to Git.** Store them only in `~/.aws/credentials`.
+> 🔐 **Never commit these keys to Git.** Store them only in `~/.aws/credentials`.
 
 ### Step 4 — Configure the AWS CLI Profile
 
@@ -81,6 +84,15 @@ You should see your account ID and user ARN returned. ✅
 
 ---
 
+## ⚙️ Prerequisites
+
+Before you begin, make sure you have:
+
+- [ ] [Terraform](https://developer.hashicorp.com/terraform/downloads) `>= 1.0` installed
+- [ ] [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) installed and configured
+- [ ] Two AWS CLI named profiles set up:
+
+```bash
 # Check your profiles exist
 cat ~/.aws/credentials
 ```
@@ -234,6 +246,21 @@ terraform output                        # Show output values
 
 **`Error: VPCIdNotSpecified`**
 → The security group and subnet must reference the same VPC. This is already handled in `main.tf` via `aws_vpc.test_vpc.id`.
+
+---
+
+---
+
+## 👨‍💻 Author
+
+**Salman Sayeed, MSc — DevOps Engineer**
+
+Built from scratch in Group Lab.
+
+| Contact | Details |
+|---------|---------|
+| 📱 WhatsApp | +447356261995 |
+| 📧 Email | salmansohailuk@gmail.com |
 
 ---
 
