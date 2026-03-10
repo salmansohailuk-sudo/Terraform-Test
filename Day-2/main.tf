@@ -1,4 +1,4 @@
-resource "aws_instance" "name" {
+resource "aws_instance" "Bastion-Server" {
     ami = var.ami_id
     instance_type = var.instance_type
     tags = {
