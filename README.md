@@ -93,6 +93,13 @@ Before you begin, make sure you have:
 - [ ] Two AWS CLI named profiles set up:
 
 ```bash
+### 1. Show configured AWS profiles
+####  configure list-profiles
+
+### 2. Display credentials file (contains access keys)
+#### cat ~/.aws/credentials
+
+
 # Check your profiles exist
 
 | Profile | Environment | Region    |
