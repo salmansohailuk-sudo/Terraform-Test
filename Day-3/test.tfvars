@@ -1,0 +1,6 @@
+ami_id = "ami-03caad32a158f72db"
+instance_type = "t2.micro"
+vpc_cidr              = "10.0.0.0/16"
+public_subnet1_cidr   = "10.0.1.0/24"
+availability_zone_2a  = "us-west-2a"
+env                   = "test"
