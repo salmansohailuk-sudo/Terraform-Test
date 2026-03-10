@@ -124,10 +124,10 @@ terraform init
 ## 🌍 Deploying an Environment
 
 ### Deploy **Dev and Test** (us-east-1/us-west-2)
-# Preview changes
+### Preview changes
 terraform plan
 
-# Apply changes
+### Apply changes
 terraform apply
 
 ## OR Plan and Deploy Individual Environment 
