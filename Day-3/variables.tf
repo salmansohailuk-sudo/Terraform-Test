@@ -1,63 +1,59 @@
+# ============================================================
+# VARIABLES — DEV ENVIRONMENT  (us-east-1)
+# ============================================================
 
-## dev environment variables##
-#here dev = defualt profile in provider.tf
 variable "ami_id" {
-    description = "passing values to ami_id"
-    default = ""
-    type = string
-  
+  description = "AMI ID for the dev EC2 instance"
+  type        = string
+  default     = ""
 }
+
 variable "instance_type" {
-    description = "passing values to instance_type"
-    default = ""
-    type = string
-  
+  description = "Instance type for the dev EC2 instance"
+  type        = string
+  default     = ""
 }
 
-### test env variables## 
+# ============================================================
+# VARIABLES — TEST ENVIRONMENT  (us-west-2)
+# ============================================================
+
 variable "test_ami_id" {
-    description = "passing values to ami_id"
-    default = ""
-    type = string
-  
-}
-variable "test_instance_type" {
-    description = "passing values to instance_type"
-    default = ""
-    type = string
-  
+  description = "AMI ID for the test EC2 instance"
+  type        = string
+  default     = ""
 }
 
-## ============================================================
-## NETWORKING — CIDRs
-## ============================================================
+variable "test_instance_type" {
+  description = "Instance type for the test EC2 instance"
+  type        = string
+  default     = ""
+}
+
+variable "env" {
+  description = "Environment name used in resource tags (e.g. dev, test)"
+  type        = string
+  default     = "test"
+}
+
+# ============================================================
+# VARIABLES — NETWORKING  (test VPC)
+# ============================================================
+
 variable "vpc_cidr" {
-  description = "CIDR block for the VPC"
+  description = "CIDR block for the test VPC"
   type        = string
   default     = "10.0.0.0/16"
 }
 
 variable "public_subnet1_cidr" {
-  description = "CIDR for public subnet in AZ 1a"
+  description = "CIDR block for the public subnet in us-west-2a"
   type        = string
   default     = "10.0.1.0/24"
 }
 
-## ============================================================
-## Environment — Variable
-## ============================================================
-
-variable "env" {
-  description = "Environment name (e.g. dev, staging, prod)"
-  type        = string
-  default     = "test"
-}
-
-## ============================================================
-## AVAILABILITY ZONES
-## ============================================================
 variable "availability_zone_2a" {
-  description = "Primary availability zone"
+  description = "Availability zone for the public subnet"
   type        = string
   default     = "us-west-2a"
 }

@@ -1,57 +1,97 @@
+# ============================================================
+# DEV ENVIRONMENT  (us-east-1)
+# ============================================================
+
 resource "aws_instance" "dev" {
-  provider = aws.devenv
-    ami = var.ami_id
-    instance_type = var.instance_type
-    tags = {
-        Name = "dev-instance"
-    }
+  provider      = aws.devenv
+  ami           = var.ami_id
+  instance_type = var.instance_type
+
+  tags = {
+    Name = "dev-instance"
+  }
 }
 
+# ============================================================
+# TEST ENVIRONMENT  (us-west-2)
+# ============================================================
 
-## ============================================================
-## VPC in West-2 Oregeon
-## ============================================================
-resource "aws_vpc" "test-vpc" {
-  provider = aws.testenv
+# --- VPC ---
+
+resource "aws_vpc" "test_vpc" {
+  provider   = aws.testenv
   cidr_block = var.vpc_cidr
+
   tags = {
     Name = "${var.env}-vpc"
   }
 }
 
+# --- Public Subnet (us-west-2a) ---
 
-## ============================================================
-## PUBLIC SUBNETS
-## ============================================================
 resource "aws_subnet" "public_subnet_2a" {
-  provider = aws.testenv
-  vpc_id            = aws_vpc.test-vpc.id
+  provider          = aws.testenv
+  vpc_id            = aws_vpc.test_vpc.id
   cidr_block        = var.public_subnet1_cidr
   availability_zone = var.availability_zone_2a
+
   tags = {
     Name = "${var.env}-public-subnet-1"
   }
-
 }
-## ============================================================
-## EC2 in PUBLIC SUBNET
-## ============================================================
 
+# --- Security Group ---
+# Allows inbound SSH (22) and HTTP (80) from anywhere.
+# All outbound traffic is permitted.
+
+resource "aws_security_group" "test_sg" {
+  provider    = aws.testenv
+  name        = "${var.env}-sg"
+  description = "Security group for the test environment"
+  vpc_id      = aws_vpc.test_vpc.id
+
+  # Allow SSH from anywhere (tighten to your IP in production)
+  ingress {
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Allow HTTP from anywhere
+  ingress {
+    description = "HTTP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Allow all outbound traffic
+  egress {
+    description = "Allow all outbound"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "${var.env}-sg"
+  }
+}
+
+# --- EC2 Instance in Public Subnet ---
 
 resource "aws_instance" "test" {
-    ami = var.test_ami_id
-    instance_type = var.test_instance_type
-    provider = aws.testenv
-######Please replace subnet id from us-west-2a
-     subnet_id = "subnet-002bc87999bd986b7" ## must replace for it to work
+  provider               = aws.testenv
+  ami                    = var.test_ami_id
+  instance_type          = var.test_instance_type
+  subnet_id              = aws_subnet.public_subnet_2a.id
+  vpc_security_group_ids = [aws_security_group.test_sg.id]
 
-######Please replace SG -Security id from us-west-2a
-
-  vpc_security_group_ids = [
-    "sg-0522b764561150816"  ### must replace for it to work
-  ]
-    tags = {
-        Name = "test-instance"
-    }
+  tags = {
+    Name = "test-instance"
+  }
 }
-
