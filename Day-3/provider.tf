@@ -15,12 +15,3 @@ provider "aws" {
     profile = "test"
   
 }
-
-# calling keys from my local machine prod profile credentials 
-## prod environment provider block##
-provider "aws" {
-    region = "us-west-2"
-    alias = "prodenv"
-    profile = "prod"
-  
-}
