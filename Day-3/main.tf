@@ -37,13 +37,21 @@ resource "aws_subnet" "public_subnet_2a" {
 ## EC2 in PUBLIC SUBNET
 ## ============================================================
 
- 
-#resource "aws_instance" "test" {
- #   ami = var.test_ami_id
-  #  instance_type = var.test_instance_type
-  #  provider = aws.testenv
- #   tags = {
- #       Name = "test-instance"
- #   }
-#}
+
+resource "aws_instance" "test" {
+    ami = var.test_ami_id
+    instance_type = var.test_instance_type
+    provider = aws.testenv
+######Please replace subnet id from us-west-2a
+     subnet_id = "subnet-002bc87999bd986b7" ## must replace for it to work
+
+######Please replace SG -Security id from us-west-2a
+
+  vpc_security_group_ids = [
+    "sg-0522b764561150816"  ### must replace for it to work
+  ]
+    tags = {
+        Name = "test-instance"
+    }
+}
 
