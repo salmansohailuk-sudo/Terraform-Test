@@ -271,7 +271,7 @@ terraform output                        # Show output values
 
 **Salman Sayeed, MSc — DevOps Engineer**
 
-Built from scratch in Group Lab.
+Built from scratch..
 
 | Contact | Details |
 |---------|---------|
