@@ -110,6 +110,6 @@ variable "skip_final_snapshot" {
 
 variable "bucket" {
   description = "salmanthechampionofthechampion"
-  default = "salmanthechampionofthechampion"
+ # default = "salmanthechampionofthechampion"
   type = string
 }
