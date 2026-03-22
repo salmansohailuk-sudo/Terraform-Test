@@ -40,6 +40,8 @@ resource "aws_db_instance" "default" {
   backup_retention_period = var.backup_retention_period
   backup_window           = var.backup_window
 
+
+
   #monitoring_interval = var.monitoring_interval
   #monitoring_role_arn = aws_iam_role.rds_monitoring.arn
 
@@ -50,5 +52,6 @@ resource "aws_db_instance" "default" {
 
 resource "aws_s3_bucket" "name" {
     bucket = var.bucket
-  
+    bucket_prefix = var.bucket-prefix
+
 }

@@ -113,3 +113,9 @@ variable "bucket" {
   default = "salmanthechampionofthechampion"
   type = string
 }
+
+variable "bucket-prefix" {
+  description = "salmanthechampion"
+  default = "salmanthechampion"
+  type = string
+}
