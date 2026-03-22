@@ -29,8 +29,8 @@ resource "aws_db_instance" "default" {
   engine                       = var.db_engine
   engine_version               = var.db_engine_version
   instance_class               = var.db_instance_class
-  username                     = "test"
-  #username                     = var.db_username
+  #username                     = "test"
+  username                     = var.db_username
   
   manage_master_user_password  = true
 

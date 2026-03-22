@@ -99,7 +99,7 @@ variable "maintenance_window" {
 variable "deletion_protection" {
   description = "Enable deletion protection"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "skip_final_snapshot" {
@@ -109,6 +109,7 @@ variable "skip_final_snapshot" {
 }
 
 variable "bucket" {
-  default = "Salmanthechampionofthechampion"
+  description = "salmanthechampionofthechampion"
+  default = "salmanthechampionofthechampion"
   type = string
 }
