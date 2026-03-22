@@ -2,7 +2,8 @@
 
 module "rds" {
     
-    source = "github.com/CloudTechDevOps/Terraform-0730am/Day-10-RDS-module"
+    #source = "github.com/CloudTechDevOps/Terraform-0730am/Day-10-RDS-module"
+    source = "github.com/salmansohailuk-sudo/Terraform-Test/Day11-RDSModule"
     #user your github source
     vpc_cidr = "10.0.0.0/16"
 

@@ -1,3 +1,5 @@
+## Here we are creating resources
+
 resource "aws_vpc" "this" {
   cidr_block = var.vpc_cidr
 
@@ -28,6 +30,8 @@ resource "aws_db_instance" "default" {
   engine_version               = var.db_engine_version
   instance_class               = var.db_instance_class
   username                     = "test"
+  #username                     = var.db_username
+  
   manage_master_user_password  = true
 
   db_subnet_group_name = aws_db_subnet_group.sub_grp.name
