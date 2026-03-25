@@ -26,11 +26,11 @@ module "rds" {
 
 module "s3" {
     source = "./modules/s3"
-    bucket = "wertyuisdfghjxcfvgh"
+    bucket = "salman-wertyuisdfghjxcfvgh"
   
 
 }
 
-module "lambda" {
-    source = "./modules/lambda"
-}
+#module "lambda" {
+#    source = "./modules/lambda"
+#}
