@@ -1,3 +1,6 @@
+
+##Terraform data source is used to read existing infrastructure and use it in our terraform code. 
+##In this case we are reading existing subnet and AMI and using it to create EC2 instance.
 data "aws_subnet" "name" {
   filter {
     name   = "tag:Name"
