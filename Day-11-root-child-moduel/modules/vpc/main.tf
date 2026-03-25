@@ -1,15 +1,15 @@
-resource "aws_vpc" "main" {
+resource "aws_vpc" "hr-vpc" {
   cidr_block = var.cidr_block
 }
 
-resource "aws_subnet" "main" {
-  vpc_id     = aws_vpc.main.id
+resource "aws_subnet" "hr-subnet-1" {
+  vpc_id     = aws_vpc.hr-vpc.id
   cidr_block = var.subnet_1_cidr
   availability_zone = var.az1
 }
 
-resource "aws_subnet" "name" {
-    vpc_id = aws_vpc.main.id
+resource "aws_subnet" "hr-subnet-2" {
+    vpc_id = aws_vpc.hr-vpc.id
     cidr_block = var.subnet_2_cidr
     availability_zone = var.az2
 
@@ -18,9 +18,9 @@ resource "aws_subnet" "name" {
 
 
 output "subnet_1_id" {
-  value = "${aws_subnet.main.id}"
+  value = "${aws_subnet.hr-subnet-1.id}"
 }
 
 output "subnet_2_id" {
-  value = "${aws_subnet.name.id}"
+  value = "${aws_subnet.hr-subnet-2.id}"
 }
