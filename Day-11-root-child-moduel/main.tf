@@ -5,6 +5,11 @@ module "vpc" {
   subnet_2_cidr = "10.0.2.0/24"
   az1           = "us-east-1a"
   az2           = "us-east-1b"
+  vpc_name      = "hr_VPC"
+  subnet_1_name = "hr-subnet-1"
+  subnet_2_name = "hr-subnet-2"
+
+
 }
 
 module "ec2" {
