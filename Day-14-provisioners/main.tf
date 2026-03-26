@@ -170,3 +170,59 @@ resource "null_resource" "copy_file" {
 #Use terraform taint to manually mark the resource for recreation:
 # terraform taint aws_instance.server
 # terraform apply
+
+
+
+module "rds" {
+  source          = "./modules/rds"
+  db_name         = "mydb"
+  username        = "admin"
+  password        = "Admin123!"
+  instance_class  = "db.t3.micro"
+  engine          = "mysql"
+  engine_version  = "8.0"
+}
+
+
+resource "null_resource" "run_sql" {
+  depends_on = [module.rds]
+
+  triggers = {
+    sql_hash = filemd5("${path.module}/scripts/init.sql")
+  }
+
+  provisioner "local-exec" {
+    command = <<EOT
+      mysql -h ${module.rds.primary_endpoint} \
+            -u admin \
+            -pAdmin123! \
+            < ${path.module}/scripts/init.sql
+    EOT
+  }
+}
+
+
+resource "null_resource" "query_users" {
+  depends_on = [null_resource.run_sql]
+
+  provisioner "local-exec" {
+    command = <<EOT
+      mysql -h ${module.rds.primary_endpoint} \
+            -u admin \
+            -pAdmin123! \
+            -e "USE appdb; SELECT * FROM users;" \
+            > users_output.txt
+    EOT
+  }
+
+  triggers = {
+    always = timestamp()
+  }
+}
+
+output "users_table_records" {
+  value = file("${path.module}/users_output.txt")
+}
+
+
+
