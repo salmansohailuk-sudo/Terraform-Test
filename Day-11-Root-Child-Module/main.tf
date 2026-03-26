@@ -42,9 +42,7 @@ sg_id            = module.sg.rds_sg_id    # Attach RDS security group
 module "s3" {
     source = "./modules/s3"
     bucket = "faisal-wertyuisdfghjxcfvgh"
-  
-
-}
+ }
 
 #module "lambda" {
 #    source = "./modules/lambda"
