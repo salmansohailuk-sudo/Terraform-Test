@@ -66,3 +66,8 @@ output "subnet_1_id" {
 output "subnet_2_id" {
   value = aws_subnet.hr-subnet-2.id
 }
+
+#  required by module "sg" in root main.tf
+output "vpc_id" {
+  value = aws_vpc.hr-vpc.id
+}

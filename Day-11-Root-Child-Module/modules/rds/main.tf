@@ -17,5 +17,7 @@ resource "aws_db_instance" "mysql-hrdb" {
   username             = var.db_user
   password             = var.db_password
   db_subnet_group_name = aws_db_subnet_group.hrdb-subnet-group.name
+vpc_security_group_ids = [var.sg_id]
   skip_final_snapshot  = true
+
 }
