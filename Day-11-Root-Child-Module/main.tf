@@ -23,7 +23,7 @@ module "ec2" {
    source        = "./modules/ec2"
    ami_id        = "ami-02dfbd4ff395f2a1b"  # Replace with valid AMI
    instance_type = "t2.micro"
-   subnet_1_id     = module.vpc.subnet_1_id
+   subnet_1_id   = module.vpc.subnet_1_id
    sg_id         = module.sg.ec2_sg_id     # Attach EC2 security group
 
 }
@@ -36,7 +36,7 @@ module "rds" {
   db_name        = "mydb"
   db_user        = "admin"
   db_password    = "Admin12345"
-sg_id          = module.sg.rds_sg_id    # Attach RDS security group
+sg_id            = module.sg.rds_sg_id    # Attach RDS security group
 }
 
 module "s3" {
