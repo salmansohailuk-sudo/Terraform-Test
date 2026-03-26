@@ -1,1 +1,0 @@
-"echo 'hello from veeranare' >> /home/ubuntu/file200"

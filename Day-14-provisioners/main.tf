@@ -2,7 +2,9 @@
 # Key Pair
 resource "aws_key_pair" "example" {
   key_name   = "task"
-  public_key = file("~/.ssh/id_rsa.pub")
+  public_key = file("C:\\ssh\\my-ssh-key.pub")
+
+
 }
 
 # VPC
@@ -12,7 +14,7 @@ resource "aws_vpc" "myvpc" {
   enable_dns_hostnames = true
 
   tags = {
-    Name = "MyVPC"
+    Name = "Sales-VPC"
   }
 }
 
@@ -80,7 +82,7 @@ resource "aws_security_group" "webSg" {
 
 # EC2 Instance (Ubuntu)
 resource "aws_instance" "server" {
-  ami                         = "ami-0261755bbcb8c4a84" # Ubuntu AMI
+  ami                         = "ami-0ec10929233384c7f" # Ubuntu AMI
   instance_type               = "t2.micro"
   key_name                    = aws_key_pair.example.key_name
   subnet_id                   = aws_subnet.sub1.id
@@ -116,16 +118,20 @@ resource "aws_instance" "server" {
    
 #  }
  }
+
+/* 
 resource "null_resource" "run_script" {
   provisioner "remote-exec" {
     connection {
       host        = aws_instance.server.public_ip
       user        = "ubuntu"
-      private_key = file("~/.ssh/id_rsa")
+      private_key = file("C:\\ssh\\my-ssh-key")
+
+
     }
 
     inline = [
-      "echo 'hello from veeranareshithyd' >> /home/ubuntu/file200"
+      "echo 'hello from SalmanSohailUK' >> /home/ubuntu/file200"
     ]
   }
 
@@ -133,9 +139,31 @@ resource "null_resource" "run_script" {
   #   always_run = "${timestamp()}" # Forces rerun every time
   # }
   triggers = {
-  script_hash = filemd5("script.sh") # Rerun only if script changes
+  #script_hash = filemd5("script.sh") # Rerun only if script changes
+script_hash = md5("echo 'hello from SalmanSohailUK' >> /home/ubuntu/file200")
+
 }
 }
+*/
+
+
+resource "null_resource" "copy_file" {
+  provisioner "file" {
+    source      = "./script.sql"
+    destination = "/home/ubuntu/scritp.sql"
+
+    connection {
+      host        = aws_instance.server.public_ip
+      user        = "ubuntu"
+      private_key = file("C:/ssh/my-ssh-key")
+    }
+  }
+
+  triggers = {
+    file_hash = filemd5("./script.sql")
+  }
+}
+
 
 
 #Solution-2 to Re-Run the Provisioner
