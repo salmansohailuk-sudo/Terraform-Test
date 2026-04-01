@@ -174,31 +174,14 @@ resource "null_resource" "copy_file" {
 
 
 module "rds" {
-  source          = "./modules/rds"
-  db_name         = "mydb"
-  username        = "admin"
-  password        = "Admin123!"
-  instance_class  = "db.t3.micro"
-  engine          = "mysql"
-  engine_version  = "8.0"
-}
+  source = "./modules/rds"
 
+  primary_identifier  = "primary-db"
+  replica_identifier  = "read-replica"
 
-resource "null_resource" "run_sql" {
-  depends_on = [module.rds]
-
-  triggers = {
-    sql_hash = filemd5("${path.module}/scripts/init.sql")
-  }
-
-  provisioner "local-exec" {
-    command = <<EOT
-      mysql -h ${module.rds.primary_endpoint} \
-            -u admin \
-            -pAdmin123! \
-            < ${path.module}/scripts/init.sql
-    EOT
-  }
+  db_name             = "mydb"
+  username            = "admin"
+  password            = "Admin123!"
 }
 
 
@@ -220,9 +203,7 @@ resource "null_resource" "query_users" {
   }
 }
 
+
 output "users_table_records" {
   value = file("${path.module}/users_output.txt")
 }
-
-
-
