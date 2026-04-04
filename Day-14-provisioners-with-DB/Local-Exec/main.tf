@@ -21,7 +21,7 @@ resource "null_resource" "local_sql_exec" {
   depends_on = [aws_db_instance.mysql_rds]
 
   provisioner "local-exec" {
-    command = "mysql -h ${aws_db_instance.mysql_rds.address} -u admin -pPassword123! dev < init.sql"
+       command = "mysql -h ${aws_db_instance.mysql_rds.address} -u admin -pPassword123! dev < init.sql"
   }
 
   triggers = {
