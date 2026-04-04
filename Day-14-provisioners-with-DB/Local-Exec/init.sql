@@ -1,65 +1,71 @@
--- Ensure database exists and use it
+-- ===============================================
+-- 1. Ensure database exists
+-- ===============================================
 CREATE DATABASE IF NOT EXISTS dev;
 USE dev;
 
--- USERS TABLE
+-- ===============================================
+-- 2. USERS table
+-- ===============================================
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
+    name VARCHAR(100) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Optional: ensure schema updates (safe re-runs)
-ALTER TABLE users 
-ADD COLUMN IF NOT EXISTS name VARCHAR(100) NOT NULL;
+-- Insert random users (idempotent)
+INSERT INTO users (email, name)
+VALUES
+('alice@example.com', 'Alice Johnson'),
+('bob@example.com', 'Bob Smith'),
+('carol@example.com', 'Carol White'),
+('dave@example.com', 'Dave Brown'),
+('eve@example.com', 'Eve Black')
+ON DUPLICATE KEY UPDATE
+    name = VALUES(name);
 
--- PRODUCTS TABLE
+-- ===============================================
+-- 3. PRODUCTS table
+-- ===============================================
 CREATE TABLE IF NOT EXISTS products (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    price DECIMAL(10, 2) NOT NULL,
+    name VARCHAR(100) NOT NULL UNIQUE,
+    price DECIMAL(10,2) NOT NULL,
     stock INT DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- ORDERS TABLE
+-- Insert random products (idempotent)
+INSERT INTO products (name, price, stock)
+VALUES
+('Laptop', 999.99, 10),
+('Smartphone', 599.99, 25),
+('Headphones', 199.99, 50),
+('Keyboard', 49.99, 100),
+('Monitor', 299.99, 30)
+ON DUPLICATE KEY UPDATE
+    price = VALUES(price),
+    stock = VALUES(stock);
+
+-- ===============================================
+-- 4. ORDERS table
+-- ===============================================
 CREATE TABLE IF NOT EXISTS orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
     order_date DATE,
-    total_amount DECIMAL(10, 2),
-    CONSTRAINT fk_orders_user 
-        FOREIGN KEY (user_id) REFERENCES users(id)
+    total_amount DECIMAL(10,2),
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
--- Advance Level SQL Settings - Optional: add FK only if missing (MySQL workaround)
--- MySQL doesn't support IF NOT EXISTS for constraints directly,
--- so we wrap it in a check
-SET @fk_exists = (
-    SELECT COUNT(*)
-    FROM information_schema.TABLE_CONSTRAINTS
-    WHERE CONSTRAINT_SCHEMA = DATABASE()
-      AND TABLE_NAME = 'orders'
-      AND CONSTRAINT_NAME = 'fk_orders_user'
-);
-
--- Advance Level SQL Settings - 
-
-SET @sql = IF(@fk_exists = 0,
-    'ALTER TABLE orders ADD CONSTRAINT fk_orders_user FOREIGN KEY (user_id) REFERENCES users(id)',
-    'SELECT "Foreign key already exists"'
-);
-
--- Advance Level SQL Settings - 
-
-PREPARE stmt FROM @sql;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;
-
--- Example safe seed data
--- Advance Level SQL Settings - 
-
-INSERT INTO users (email, name)
-VALUES ('admin@example.com', 'Admin User')
-ON DUPLICATE KEY UPDATE name = VALUES(name);
+-- Insert random orders (idempotent)
+INSERT INTO orders (user_id, order_date, total_amount)
+VALUES
+(1, '2026-04-01', 1199.98),
+(2, '2026-04-02', 599.99),
+(3, '2026-04-03', 199.99),
+(4, '2026-04-04', 49.99),
+(5, '2026-04-05', 299.99)
+ON DUPLICATE KEY UPDATE
+    total_amount = VALUES(total_amount);
