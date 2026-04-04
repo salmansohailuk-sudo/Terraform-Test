@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Insert random users (idempotent)
+-- Insert sample users (idempotent)
 INSERT INTO users (email, name)
 VALUES
 ('alice@example.com', 'Alice Johnson'),
@@ -30,13 +30,14 @@ ON DUPLICATE KEY UPDATE
 -- ===============================================
 CREATE TABLE IF NOT EXISTS products (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL UNIQUE,
+    name VARCHAR(100) NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     stock INT DEFAULT 0,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_name (name)
 );
 
--- Insert random products (idempotent)
+-- Insert sample products (idempotent)
 INSERT INTO products (name, price, stock)
 VALUES
 ('Laptop', 999.99, 10),
@@ -56,10 +57,11 @@ CREATE TABLE IF NOT EXISTS orders (
     user_id INT,
     order_date DATE,
     total_amount DECIMAL(10,2),
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    UNIQUE KEY unique_user_order (user_id, order_date)
 );
 
--- Insert random orders (idempotent)
+-- Insert sample orders (idempotent)
 INSERT INTO orders (user_id, order_date, total_amount)
 VALUES
 (1, '2026-04-01', 1199.98),
